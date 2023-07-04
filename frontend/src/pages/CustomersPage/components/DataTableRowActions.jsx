@@ -14,10 +14,20 @@ import {
 
 import { API_CUSTOMERS_URL } from "../../../config/apiURL";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { custom } from "zod";
 
 export function DataTableRowActions({ row }) {
-  
+  const handleDelete = (event) => {
+    console.log(parseInt(row.original.id));
+    fetch(API_CUSTOMERS_URL + `/${parseInt(row.original.id)}`, {
+      method: "DELETE",
+      headers: {
+      "Content-Type": "application/json",
+      },
+  }).then((res) => res.json());
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -37,7 +47,7 @@ export function DataTableRowActions({ row }) {
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleDelete}> 
           <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
           Delete
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>

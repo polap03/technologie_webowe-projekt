@@ -5,11 +5,11 @@ from .schema import CustomerCreateSchema, CustomerUpdateSchema, Customer, Order,
 
 router = APIRouter()
 
-
 CUSTOMERS_STORAGE = get_customers_storage()
 ORDERS_STORAGE = get_orders_storage()
 PRODUCTS_STORAGE = get_products_storage()
 
+max_id = len(CUSTOMERS_STORAGE) + 1
 
 @router.get("/customers/")
 async def get_customers() -> list[Customer]:
@@ -59,16 +59,18 @@ async def update_customer(
 @router.delete("/customers/{customer_id}")
 async def delete_customer(customer_id: int) -> None:
     try:
+
         del CUSTOMERS_STORAGE[customer_id]
     except KeyError:
         raise HTTPException(
             status_code=404, detail=f"Customer with ID={customer_id} does not exist."
         )
 
-
 @router.post("/customers/")
 async def create_customer(customer: CustomerCreateSchema) -> Customer:
-    id = len(CUSTOMERS_STORAGE) + 1
+    global max_id
+    id = max_id
+    max_id += 1
     new_customer = Customer(**customer.dict(), id=id)
     CUSTOMERS_STORAGE[id] = new_customer
     return new_customer
@@ -85,6 +87,7 @@ async def get_order(order_id: int) -> Order:
         raise HTTPException(
             status_code=404, detail=f"Order with ID={order_id} does not exist."
         )
+    
 @router.get("/products")
 async def get_products() -> list[Product]:
     return list(PRODUCTS_STORAGE.values())

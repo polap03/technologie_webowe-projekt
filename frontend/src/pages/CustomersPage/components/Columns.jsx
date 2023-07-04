@@ -19,7 +19,6 @@ export const Columns = [
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
-        f
         className="translate-y-[2px]"
       />
     ),

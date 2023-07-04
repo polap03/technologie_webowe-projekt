@@ -6,6 +6,7 @@ import { UserNav } from "./components/UserNav";
 import { navigationLinks } from "../../config/navigationLinks";
 import { API_CUSTOMERS_URL } from "../../config/apiURL";
 import { useState, useEffect } from "react";
+
 export const CustomersPage = () => {
 
   const [customers, setCustomers] = useState([]);
