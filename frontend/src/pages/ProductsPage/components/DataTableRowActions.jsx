@@ -30,12 +30,10 @@ export function DataTableRowActions({ row }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <Link to={`/edit-customer/${parseInt(row.id) + 1}`}>
           <DropdownMenuItem>
             <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             Edit
           </DropdownMenuItem>
-        </Link>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
